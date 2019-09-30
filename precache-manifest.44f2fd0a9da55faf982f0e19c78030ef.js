@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "458f2c298c9920a560c2cfc8ddf73c7c",
+    "revision": "3cf054b0aa24d12c735cf76257776c72",
     "url": "/lozzoc/index.html"
   },
   {
@@ -8,7 +8,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/lozzoc/static/css/2.0624914a.chunk.css"
   },
   {
-    "revision": "3e43411570cb035198e7",
+    "revision": "789d71662d8f37222905",
     "url": "/lozzoc/static/css/main.3fde77f4.chunk.css"
   },
   {
@@ -16,8 +16,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/lozzoc/static/js/2.97ddcf0a.chunk.js"
   },
   {
-    "revision": "3e43411570cb035198e7",
-    "url": "/lozzoc/static/js/main.344e6fd4.chunk.js"
+    "revision": "789d71662d8f37222905",
+    "url": "/lozzoc/static/js/main.3d74f25d.chunk.js"
   },
   {
     "revision": "79e5c2a45628db2aaf0a",
