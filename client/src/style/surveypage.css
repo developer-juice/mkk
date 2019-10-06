@@ -1,0 +1,39 @@
+.survey-page-headsup{
+
+}
+
+.survey-page-filter-box{
+  display: flex;
+  border-top: 1px solid black;
+  border-bottom: 1px solid black;
+  margin-left: 20px;
+  margin-right: 20px;
+  width: 80%;
+  padding: 8px 15px 8px 15px;
+  justify-content: space-around;
+}
+
+
+
+#survey-page-form{
+
+  margin: 20px
+}
+
+.human-card{
+  margin-top: 15px;
+  margin-bottom: 15px;
+
+}
+
+.mobile-crunch{
+
+}
+
+.warn-table{
+   border: 2px solid red;
+}
+.warn-table tr{
+  border: 2px solid red;
+
+}
