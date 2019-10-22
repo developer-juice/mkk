@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 import "../style/surveypage.css"
 import PersonCardDesktop from "../components/personCardDesktop"
 import PersonCardMobile from "../components/personCardMobile"
+import ThreejsMobile from "../components/PhotoCircleIframe.js";
+
 import dummydata from "../dev/dummydata.js"
 
 const ADRATE = 3;
@@ -117,12 +119,12 @@ class SurveyPage extends Component {
       }
     }
     var classStr = `table ${this.state.eighteen ? "table-dark" : "table-striped"}`;
-    console.log(classStr);
       return(
         <div id="survey-page-form">
+        <ThreejsMobile db={[]} />
+
           <table id="survey-table" className={classStr}>
             <tbody>
-              {cards}
             </tbody>
           </table>
           <button style={{ marginTop:"20px", padding: "10px"}} type="button" className="btn btn-info right" onClick={this.submitValidate}>Submit</button>
