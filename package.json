@@ -4,6 +4,7 @@
   "description": "web app for various social games , like marrykisskill",
   "main": "server/server.js",
   "scripts": {
+    "dev-client": "PORT=31005 npm start --prefix client ",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
