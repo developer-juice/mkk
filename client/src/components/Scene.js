@@ -13,15 +13,18 @@ const radius = 15;
 class Scene {
   constructor() {
 
-    // this.start = this.start.bind(this)
     this.stop = this.stop.bind(this)
-    // this.animate = this.animate.bind(this);
     this.render = this.render.bind(this);
+    this.pullCenterCircle = this.pullCenterCircle.bind(this);
+    this.pushBackToDisplay = this.pushBackToDisplay.bind(this);
     this.rotateCW = this.rotateCW.bind(this);
     this.rotateCCW = this.rotateCCW.bind(this);
     this.renderScene = this.renderScene.bind(this);
+
+
     this.time = 0;
     this.curr = 0; //the index of the image thats focused
+    // if this. curr =0;, [curr, right, left]. its a left bitshift per say
     this.celebs = [null,null,null];
     this.currThetas=[0,0,0];
     this.setDefaultPos(); // does notmodify the mesh properties of postion
@@ -29,10 +32,15 @@ class Scene {
   }
 
   editVector3FromTheta(index){
+   
     // this.currThetas[index]
-    this.currPoss[index].x = radius * Math.cos(this.time + this.currThetas[index]);
-    this.currPoss[index].z = radius * Math.sin(this.time + this.currThetas[index]);
+    this.currPoss[index].x = radius * Math.cos(0+ this.currThetas[index] + this.time );
+    this.currPoss[index].z = radius * Math.sin(0+  this.currThetas[index] + this.time);
 
+  }
+
+  setMiddle(el){
+    this.curr = el;
   }
 
 
@@ -42,33 +50,30 @@ class Scene {
     var right = this.curr+ 1 > 2  ? 0 : this.curr + 1;
     this.time = 0;
 
-    this.currThetas[left] = Math.PI *150/180; // are make them to the current values
-    this.currThetas[this.curr] = Math.PI *270/180;
-    this.currThetas[right] = Math.PI *30/180;
+    this.currThetas[left] = 3.14159 *210/180; // are make them to the current values
+    this.currThetas[this.curr] = 3.14159 *90/180;
+    this.currThetas[right] = 3.14159 *330/180;
 
     this.editVector3FromTheta(left);
     this.editVector3FromTheta(right);
     this.editVector3FromTheta(this.curr);
 
-    //
     this.currPoss[right].y+=10;
     this.currPoss[left].y+=10;
-    this.currPoss[right].z-=20;
-    this.currPoss[left].z-=20;
-    this.currPoss[this.curr].z =7
-
+  
+    if(this.camera){
+      this.camera.position.z = 18.5;
+      this.camera.updateProjectionMatrix();
+    }
+    return;
   }
   createCelebBoxes(imgURLs){
+    console.log("START",imgURLs);
     var loader = new THREE.TextureLoader();
     var group = new THREE.Group();
-    var urls = [
-      `http://${window.location.host}/static/kiss.jpeg`,
-      `http://${window.location.host}/static/kill.jpg`,
-      `http://${window.location.host}/static/marry.jpg`
-    ]
-    this.celebs = _.map(urls,(val,index)=>{
+    this.celebs = _.map(imgURLs,(val,index)=>{
       // i have yet to upload images to the local storag elocation which apparently is required.
-      var texture = loader.load( val );
+      var texture = loader.load( val.profilepic );
       var geometry = new THREE.BoxGeometry(3,4.5,0.5);
       var mesh = new THREE.Mesh( geometry, new THREE.MeshPhongMaterial( { side: THREE.DoubleSide, map: texture } ) );
 
@@ -82,77 +87,73 @@ class Scene {
     this.celebs[1].position.set(this.currPoss[1].x,this.currPoss[1].y,this.currPoss[1].z);// curr right
     this.celebs[0].position.set(this.currPoss[0].x,this.currPoss[0].y,this.currPoss[0].z);// curr right
 
-    var geometry = new THREE.SphereGeometry( 1, 32, 32 );
-    var material = new THREE.MeshBasicMaterial( {color: 0xffff00} );
-    var s1 = new THREE.Mesh( geometry, material );
-    var s2 = new THREE.Mesh( geometry, material );
-    var s3 = new THREE.Mesh( geometry, material );
-
-
-    s1.position.set(this.currPoss[2].x,this.currPoss[2].y,this.currPoss[2].z);// curr right
-    s2.position.set(this.currPoss[1].x,this.currPoss[1].y,this.currPoss[1].z);// curr right
-    s3.position.set(this.currPoss[0].x,this.currPoss[0].y,this.currPoss[0].z);// curr right
 
 
 
 
     this.scene.add(group);
-    this.scene.add(s1);
-    this.scene.add(s2);
-    this.scene.add(s3);
 
     this.group = group;
-    console.log(this.currPoss);
   }
 
+  // i dont need to bind these things because a bound function calls them already.
+  pullCenterCircle(){
+
+  }
+  pushBackToDisplay(){
+
+  }
+
+
+
+  /* 
+  pull all 
+  the spheres back to the position in 
+  the circle with all the same radius, rotate them, 
+  
+  then expand
+  it to the view thats normal.
+
+  */
   rotateCW(){
     var left = this.curr- 1 < 0 ? 2 : this.curr - 1;
     var right = this.curr+ 1 > 2  ? 0 : this.curr + 1;
-    console.log(this.celebs[right].position.x);
-    if(this.celebs[right].position.x > -0.2 && this.celebs[right].position.x < 0.2 ){
-      console.log("SNAPPING",this.celebs[this.curr].position);
+    if(this.celebs[this.curr].position.x > -0.2 && this.celebs[this.curr].position.x < 0.2 ){
+      // console.log("SNAPPING",this.celebs[this.curr].position,this.curr);
       this.setDefaultPos();
-      // console.log("NOT SNAPPING",pos_list);
       this.celebs[2].position.set(this.currPoss[2].x,this.currPoss[2].y,this.currPoss[2].z);// curr right
       this.celebs[1].position.set(this.currPoss[1].x,this.currPoss[1].y,this.currPoss[1].z);// curr right
       this.celebs[0].position.set(this.currPoss[0].x,this.currPoss[0].y,this.currPoss[0].z);// curr right
-
-      this.curr = right;
     }
     else{
-
       this.editVector3FromTheta(left);
       this.editVector3FromTheta(right);
       this.editVector3FromTheta(this.curr);
 
-
-      // this.currPoss[right].y-=0.02;
-      // this.currPoss[right].z+=0.08;
-      //
-      //
-      // this.currPoss[this.curr].y+=0.02;
+      this.currPoss[left].y+=0.25;
+      this.currPoss[this.curr].y-=0.27;
       // this.currPoss[this.curr].z-=0.08;
 
       this.celebs[2].position.set(this.currPoss[2].x,this.currPoss[2].y,this.currPoss[2].z);// curr right
       this.celebs[1].position.set(this.currPoss[1].x,this.currPoss[1].y,this.currPoss[1].z);// curr right
       this.celebs[0].position.set(this.currPoss[0].x,this.currPoss[0].y,this.currPoss[0].z);// curr right
-      // this.celebs[left].__dirtyPosition = true;
-      // this.celebs[this.curr].__dirtyPosition = true;
-      // this.celebs[right].__dirtyPosition = true;
+      this.camera.position.z = 18.5 + 3 * Math.abs(Math.sin(this.time/2)); 
+      this.camera.updateProjectionMatrix();
 
-      this.time += 0.02;
+
+      this.time += 0.05;
       this.renderScene();
       this.frameId = window.requestAnimationFrame(this.rotateCW)
     }
   }
-  rotateCCW(nextCurr){
+  rotateCCW(){
     var left = this.curr- 1 < 0 ? 2 : this.curr - 1;
     var right = this.curr+ 1 > 2  ? 0 : this.curr + 1;
-    // this.celebs[nextCurr] will move to 0,0,0 somehow
-    if(this.celebs[this.curr].position.x > -0.2|| this.celebs[this.curr].position.x < 0.2 ){
-      // snap into place
+    if(this.celebs[this.curr].position.x > -0.2 && this.celebs[this.curr].position.x < 0.2 ){
       this.setDefaultPos();
-
+      this.celebs[2].position.set(this.currPoss[2].x,this.currPoss[2].y,this.currPoss[2].z);// curr right
+      this.celebs[1].position.set(this.currPoss[1].x,this.currPoss[1].y,this.currPoss[1].z);// curr right
+      this.celebs[0].position.set(this.currPoss[0].x,this.currPoss[0].y,this.currPoss[0].z);// curr right
     }
     else{
 
@@ -160,12 +161,19 @@ class Scene {
       this.editVector3FromTheta(right);
       this.editVector3FromTheta(this.curr);
 
-      // console.log("NOT SNAPPING",pos_list);
-      this.celebs[left].position.set(this.currPoss[left]);
-      this.celebs[this.curr].position.set(this.currPoss[this.curr])
-      this.celebs[right].position.set(this.currPoss[right]);
 
-      this.time += 0.01;
+      this.currPoss[this.curr].y-=0.25;
+      this.currPoss[right].y+=0.27;
+      // this.currPoss[this.curr].z-=0.08;
+
+      this.celebs[2].position.set(this.currPoss[2].x,this.currPoss[2].y,this.currPoss[2].z);// curr right
+      this.celebs[1].position.set(this.currPoss[1].x,this.currPoss[1].y,this.currPoss[1].z);// curr right
+      this.celebs[0].position.set(this.currPoss[0].x,this.currPoss[0].y,this.currPoss[0].z);// curr right
+      this.camera.position.z = 18.5 + 3 * Math.abs(Math.sin(this.time/2)); 
+      this.camera.updateProjectionMatrix();
+
+
+      this.time -= 0.05;
       this.renderScene();
       this.frameId = window.requestAnimationFrame(this.rotateCCW)
     }
@@ -189,11 +197,13 @@ class Scene {
     )
 
     this.renderer = new THREE.WebGLRenderer({ antialias: true ,alpha: true});
-    camera.position.z = 15;
-    // camera.position.y = 40;
-    // camera.lookAt(new THREE.Vector3(0,0,-10));
+    camera.position.z = 18.5;
+    camera.position.y = 0;
+    camera.lookAt(new THREE.Vector3(0,1,0));
 
-    camera.updateProjectionMatrix ()
+    camera.updateProjectionMatrix();
+
+
     this.renderer.setSize(width, height)
 
     this.camera = camera;

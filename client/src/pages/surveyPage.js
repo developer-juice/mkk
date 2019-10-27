@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import "../style/surveypage.css"
-import PersonCardDesktop from "../components/personCardDesktop"
-import PersonCardMobile from "../components/personCardMobile"
+// import PersonCardDesktop from "../components/personCardDesktop"
+// import PersonCardMobile from "../components/personCardMobile"
 import ThreejsMobile from "../components/PhotoCircleIframe.js";
 
 import dummydata from "../dev/dummydata.js"
@@ -106,23 +106,23 @@ class SurveyPage extends Component {
 
   playGame(){
     var cards= [];
-    for(var i=0;i<3;i++){
-      if(this.isMobile){
-        cards.push(
-          (<PersonCardMobile data={this.state.currspin[i]} key={"personcard"+i} index={i} />)
-        );
-      }
-      else {
-        cards.push(
-          (<PersonCardDesktop data={this.state.currspin[i]} key={"personcard"+i} index={i} />)
-        );
-      }
+    if(this.isMobile){
+      cards = (<ThreejsMobile db={this.state.currspin} />);
+    }
+    else{
+      cards = (<ThreejsMobile db={this.state.currspin} />);
+
+      // for(var i=0;i<3;i++){
+      //   cards.push(
+      //     (<PersonCardDesktop data={this.state.currspin[i]} key={"personcard"+i} index={i} />)
+      //   );   
+      // }
     }
     var classStr = `table ${this.state.eighteen ? "table-dark" : "table-striped"}`;
       return(
         <div id="survey-page-form">
-        <ThreejsMobile db={[]} />
-
+        
+          {cards}
           <table id="survey-table" className={classStr}>
             <tbody>
             </tbody>

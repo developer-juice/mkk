@@ -3,7 +3,6 @@ import React, {Component} from "react";
 import Scene from "./Scene";
 
 
-
 class votingForm {
 
     constructor(mongoDocs){
@@ -21,7 +20,6 @@ class PhotoCircleIframe extends Component {
       super(props);
       this.rightBumper = this.rightBumper.bind(this);
       this.leftBumper = this.leftBumper.bind(this);
-      this.start= this.start.bind(this)
 
       this.scene = new Scene();
       this.form = new votingForm(props.db);
@@ -39,8 +37,7 @@ class PhotoCircleIframe extends Component {
     }
     componentDidMount(){
       this.scene.render(this.mount);
-      // this.scene.start();
-      this.scene.createCelebBoxes(this.imgURLS);
+      this.scene.createCelebBoxes(this.props.db);
       this.scene.renderScene();
       this.scene.resetTime();
 
@@ -56,12 +53,11 @@ class PhotoCircleIframe extends Component {
           style={{ width: `${this.width}px`, height: `${this.height}px` }}
           ref={(mount) => { this.mount = mount }}
         ></div>
-        <button onClick={this.start} type="button">Start!</button>
+        <button onClick={this.leftBumper} className="left" type="button">CW!</button>
+        <button onClick={this.rightBumper} className="right" type="button">CCW!</button>
+
         </>
       )
-    }
-    start(){
-      this.scene.rotateCW();
     }
     rightBumper(){
       var newCurr = this.state.currImageFocused;
@@ -71,7 +67,11 @@ class PhotoCircleIframe extends Component {
       else{
           newCurr--;
       }
+      this.scene.next = newCurr;
+
+      this.scene.setMiddle(newCurr);
       this.scene.rotateCCW();
+        
 
       this.setState({
           currImageFocused: newCurr
@@ -86,7 +86,10 @@ class PhotoCircleIframe extends Component {
             newCurr++;
         }
         this.scene.next = newCurr;
+
+        this.scene.setMiddle(newCurr);
         this.scene.rotateCW();
+        
         this.setState({
             currImageFocused: newCurr
         });
