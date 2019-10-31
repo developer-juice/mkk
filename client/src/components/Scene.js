@@ -15,8 +15,6 @@ class Scene {
 
     this.stop = this.stop.bind(this)
     this.render = this.render.bind(this);
-    this.pullCenterCircle = this.pullCenterCircle.bind(this);
-    this.pushBackToDisplay = this.pushBackToDisplay.bind(this);
     this.rotateCW = this.rotateCW.bind(this);
     this.rotateCCW = this.rotateCCW.bind(this);
     this.renderScene = this.renderScene.bind(this);
@@ -95,16 +93,6 @@ class Scene {
 
     this.group = group;
   }
-
-  // i dont need to bind these things because a bound function calls them already.
-  pullCenterCircle(){
-
-  }
-  pushBackToDisplay(){
-
-  }
-
-
 
   /* 
   pull all 

@@ -1,2 +1,5 @@
 client/node_modules
-client/public/static/celebpics
+client/public/static/celebpics/*
+db-init/*
+.env
+node_modules

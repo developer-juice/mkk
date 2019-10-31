@@ -6,8 +6,13 @@ const dummydata = [
     gender: "MALE"
   },
   {
+    name: "Robert Downey Jr.",
+    profilepic: `${process.env.PUBLIC_URL}/static/celebpics/rdj.jpg`,
+    gender: "MALE"
+  },
+  {
     name: "Weird Al Yankovic",
-    profilepic: `${process.env.PUBLIC_URL}/static/celebpics/wierdal.jpg`,
+    profilepic: `${process.env.PUBLIC_URL}/static/celebpics/weirdal.jpg`,
     gender: "MALE"
   },
   {
