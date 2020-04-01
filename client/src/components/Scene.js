@@ -7,9 +7,6 @@ import _ from "lodash";
 const radius = 15;
 // const seperation = 2/3 * Math.PI;
 
-
-
-
 class Scene {
   constructor() {
 
@@ -66,12 +63,14 @@ class Scene {
     return;
   }
   createCelebBoxes(imgURLs){
-    console.log("START",imgURLs);
     var loader = new THREE.TextureLoader();
     var group = new THREE.Group();
     this.celebs = _.map(imgURLs,(val,index)=>{
       // i have yet to upload images to the local storag elocation which apparently is required.
       var texture = loader.load( val.profilepic );
+      // if(!texture){
+      //   texture = 
+      // }
       var geometry = new THREE.BoxGeometry(3,4.5,0.5);
       var mesh = new THREE.Mesh( geometry, new THREE.MeshPhongMaterial( { side: THREE.DoubleSide, map: texture } ) );
 
@@ -112,6 +111,11 @@ class Scene {
       this.celebs[2].position.set(this.currPoss[2].x,this.currPoss[2].y,this.currPoss[2].z);// curr right
       this.celebs[1].position.set(this.currPoss[1].x,this.currPoss[1].y,this.currPoss[1].z);// curr right
       this.celebs[0].position.set(this.currPoss[0].x,this.currPoss[0].y,this.currPoss[0].z);// curr right
+    
+      console.log("Ending Animation CW");
+      window.cancelAnimationFrame(this.frameId);
+
+
     }
     else{
       this.editVector3FromTheta(left);
@@ -142,6 +146,12 @@ class Scene {
       this.celebs[2].position.set(this.currPoss[2].x,this.currPoss[2].y,this.currPoss[2].z);// curr right
       this.celebs[1].position.set(this.currPoss[1].x,this.currPoss[1].y,this.currPoss[1].z);// curr right
       this.celebs[0].position.set(this.currPoss[0].x,this.currPoss[0].y,this.currPoss[0].z);// curr right
+      // clean up 
+      console.log("Ending Animation CCW")
+      window.cancelAnimationFrame(this.frameId);
+
+    
+    
     }
     else{
 
@@ -181,7 +191,8 @@ class Scene {
       75,
       width / height,
       0.1,
-      1000
+      1000      
+
     )
 
     this.renderer = new THREE.WebGLRenderer({ antialias: true ,alpha: true});

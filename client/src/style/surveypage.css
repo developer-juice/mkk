@@ -4,14 +4,19 @@
 
 .survey-page-filter-box{
   display: flex;
+  flex-wrap: no-wrap;
+  align-items:flex-start;
+  align-content:flex-start;
+  flex-basis:200px;
+
   border-top: 1px solid black;
   border-bottom: 1px solid black;
   margin-left: 20px;
   margin-right: 20px;
-  width: 80%;
   padding: 8px 15px 8px 15px;
   justify-content: space-around;
 }
+
 
 
 
