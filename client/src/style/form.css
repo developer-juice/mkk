@@ -1,0 +1,34 @@
+.vote-form {
+  background: linear-gradient(45deg, #49a09d, #5f2c82);
+  border-collapse: collapse;
+  overflow: hidden;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+.vote-form th,
+.vote-form td {
+  padding: 15px;
+  background-color: rgba(255, 255, 255, 0.2);
+  color: #fff;
+}
+.vote-form th {
+  text-align: left;
+}
+.vote-form thead th {
+  background-color: #55608f;
+}
+.vote-form tbody tr:hover {
+  background-color: rgba(255, 255, 255, 0.3);
+}
+.vote-form tbody td {
+  position: relative;
+}
+.vote-form tbody td:hover:before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: -9999px;
+  bottom: -9999px;
+  background-color: rgba(255, 255, 255, 0.2);
+  z-index: -1;
+}

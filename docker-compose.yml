@@ -1,0 +1,33 @@
+version: '3.7'
+services:
+  api:
+    build: DockerFile.server
+    image: mkk-api
+    restart: always
+    ports:
+      - 3000:31005
+    environment:
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_HOST: mysql
+      MYSQL_PORT: 3306
+
+  mysql:
+    image: mysql:5
+    restart: always
+    volumes:
+      - mysql-data:/var/lib/mysql
+      - ./db-init/:/docker-entrypoint-initdb.d
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_RANDOM_ROOT_PASSWORD: 'yes'
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      NODE_ENV: "production"
+
+volumes:
+  mysql-data:
+    name: mkk-vote-history
+

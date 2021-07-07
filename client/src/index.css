@@ -11,3 +11,41 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+
+
+button {
+  border: 2px solid grey;
+  border-radius: 15%;
+}
+
+
+.mobile div{
+  flex-basis: 100%;
+}
+#entire-game{
+  display: flex;
+  flex-wrap: wrap;
+}
+.HUD-current{
+  border-left: 1px solid grey;
+  padding-left:15px;
+}
+
+@media only screen and (min-width: 500px) {
+
+  #moneyshot-voting-table-container{
+    display:flex;
+
+  }
+  #js-render-box{
+    width: 80%;
+  }
+}
+
+@media only screen and (max-width: 500px){
+
+  .smart-lineup{
+    display: flex;
+    justify-content: space-around;
+  }
+}

@@ -25,7 +25,9 @@ function App() {
     <Router>
       <Route path="/"  >
         <Header user={{companyName: "Unlicensed"}} />
-        </Route>
+      </Route>
+
+      <Route exact path="/" component={RedirectPage} />
       <Route exact path="/mkk" component={RedirectPage} />
       <Route exact path="/mkk/play" component={SurveyPage} />
     </Router>
